@@ -294,7 +294,7 @@
     <a href="#tiktok-shop" class="nav-link tiktok">● TikTok Shop</a>
     <a href="#como-funciona" class="nav-link">Como funciona</a>
   </div>
-  <a href="#cta" class="nav-btn">Falar com especialista →</a>
+  <a href="quiz.html" class="nav-btn">Falar com especialista →</a>
 </nav>
 
 <!-- ══════════ HERO ════════════════════════════════ -->
@@ -308,7 +308,7 @@
   <h1>Você é fabricante?<br>O Brasil quer<br>comprar de você.<br>Te falta o <em>canal certo.</em></h1>
   <p class="hero-sub">A LivePRO é a consultoria + braço comercial que leva sua confecção para os maiores canais de venda online do Brasil — sem você precisar montar um departamento de e-commerce do zero.</p>
   <div class="hero-ctas">
-    <a href="#cta" class="btn-gold">Quero escalar minha marca →</a>
+    <a href="quiz.html" class="btn-gold">Quero escalar minha marca →</a>
     <a href="#tiktok-shop" class="btn-ghost">Ver oportunidade TikTok Shop</a>
   </div>
   <p class="hero-trust"><b>✓</b>&nbsp; Fabricantes de moda que já faturam online com a LivePRO</p>
@@ -421,7 +421,7 @@
       </div>
     </div>
 
-    <a href="#cta" class="tk-cta">Quero entrar no TikTok Shop com a LivePRO →</a>
+    <a href="quiz.html" class="tk-cta">Quero entrar no TikTok Shop com a LivePRO →</a>
   </div>
 </section>
 
@@ -510,7 +510,7 @@
     <span class="label" style="position:relative;z-index:1">Próximo passo</span>
     <h2>O primeiro passo <em>não tem custo.</em></h2>
     <p>Nosso especialista vai entender o momento da sua confecção e mostrar, sem enrolação, o que precisa ser feito para você começar a vender online com resultado real.</p>
-    <a href="#" class="btn-gold" id="main-cta" onclick="return false">Agendar minha conversa gratuita →</a>
+    <a href="quiz.html" class="btn-gold" id="main-cta">Fazer diagnóstico gratuito →</a>
     <div class="tr-row">
       <div class="tr-i"><b>✓</b> Sem pitch agressivo</div>
       <div class="tr-i"><b>✓</b> Sem compromisso imediato</div>
@@ -597,23 +597,7 @@
   }, {threshold:0.5});
   counters.forEach(el => cio.observe(el));
 
-  // 6. CTA BUTTON — link real do SDR (substituir abaixo)
-  const ctaMain = document.getElementById('main-cta');
-  const navBtn = document.querySelector('.nav-btn');
-  const tkCta = document.querySelector('.tk-cta');
-  const allCtaLinks = document.querySelectorAll('a[href="#cta"]');
-
-  function openSDR(e){
-    if(e) e.preventDefault();
-    // ⚠️ SUBSTITUIR PELA URL REAL: Calendly, WhatsApp, formulário do SDR
-    const SDR_URL = 'https://wa.me/5562984914936?text=Ol%C3%A1%2C+vi+a+LivePRO+e+quero+saber+mais+sobre+Marketplace+e+TikTok+Shop+para+minha+confec%C3%A7%C3%A3o';
-    window.open(SDR_URL, '_blank');
-  }
-
-  if(ctaMain) ctaMain.addEventListener('click', openSDR);
-  allCtaLinks.forEach(a => a.addEventListener('click', (e)=>{ e.preventDefault(); openSDR(); }));
-
-  // 7. SMOOTH ANCHOR SCROLL
+  // 6. SMOOTH ANCHOR SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href');
