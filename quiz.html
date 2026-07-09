@@ -386,19 +386,13 @@
 
   <!-- ════ SETUP BANNER (some admin info) ════ -->
   <div class="setup-banner" id="setupBanner">
-    <strong>⚙️ Configuração da Planilha</strong>
-    Substitua <code>COLE_SUA_URL_AQUI</code> no script abaixo pela URL do seu Apps Script para ativar o salvamento automático no Google Sheets.
+    <strong>⚙️ Planilha conectada — falta o Apps Script</strong>
+    Cole o código abaixo no Google Apps Script e depois substitua <code>COLE_SUA_URL_AQUI</code> no quiz.html pela URL gerada.
     <details>
-      <summary>▸ Ver código do Google Apps Script</summary>
+      <summary>▸ Ver código pronto para colar</summary>
       <pre>
-// 1. Abra script.google.com → Novo projeto
-// 2. Cole este código abaixo
-// 3. Implantar → Nova implantação → Aplicativo da Web
-//    Executar como: Eu | Acesso: Qualquer pessoa
-// 4. Copie a URL e cole em WEBHOOK_URL no quiz.html
-
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var sheet = SpreadsheetApp.openById('1Mb2SlDZqh3_45e0qI5IQ4Bxk0Vv-eWVIjazFcYaPOyU').getActiveSheet();
   var data  = JSON.parse(e.postData.contents);
 
   if (sheet.getLastRow() === 0) {
