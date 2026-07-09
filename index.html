@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LivePRO — Marketplace & TikTok Shop para Fabricantes de Moda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ──────────────────────────────────── */
+    :root {
+      --bg:        #08080F;
+      --surf:      #111120;
+      --card:      #16162E;
+      --bord:      #222248;
+      --bord-h:    #3A3A70;
+      --purple:    #7C3AED;
+      --purple-l:  #B39AFA;
+      --coral:     #FF5070;
+      --gold:      #F59E0B;
+      --gold-d:    #C47D08;
+      --green:     #10B981;
+      --text:      #EEEEFF;
+      --text2:     #9898C0;
+      --faint:     #404068;
+      /* TikTok brand */
+      --tk-red:    #FF0050;
+      --tk-cyan:   #00F2EA;
+      --tk-bg:     #050508;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+    /* ─── PROGRESS BAR ───────────────────────────── */
+    #progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--purple),var(--coral));z-index:500;transition:width 0.05s linear}
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav{
+      position:fixed;top:3px;left:0;right:0;z-index:200;height:64px;padding:0 2rem;
+      display:flex;align-items:center;justify-content:space-between;gap:2rem;
+      background:rgba(8,8,15,0.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--bord);
+      transition:background 0.3s;
+    }
+    .logo{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.04em;color:var(--text);text-decoration:none}
+    .logo em{font-style:normal;color:var(--coral)}
+    .nav-links{display:flex;gap:0.25rem;align-items:center}
+    .nav-link{font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;color:var(--text2);padding:0.45rem 0.9rem;border-radius:6px;text-decoration:none;transition:color 0.2s,background 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+    .nav-link.tiktok{color:var(--tk-cyan);font-weight:600}
+    .nav-link.tiktok:hover{background:rgba(0,242,234,0.08)}
+    .nav-btn{display:inline-flex;align-items:center;gap:0.4rem;background:var(--gold);color:#0A0700;font-family:'Manrope',sans-serif;font-weight:700;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:6px;text-decoration:none;transition:background 0.18s,transform 0.18s;white-space:nowrap;flex-shrink:0}
+    .nav-btn:hover{background:var(--gold-d);transform:translateY(-1px)}
+
+    /* ─── CONTAINERS ─────────────────────────────── */
+    .wrap{max-width:1100px;margin:0 auto}
+
+    /* ─── TYPOGRAPHY HELPERS ─────────────────────── */
+    .label{display:inline-block;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-l);margin-bottom:0.9rem}
+    h2.ht{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.75rem,3.4vw,2.75rem);line-height:1.18;letter-spacing:-0.03em;margin-bottom:1rem}
+    h2.ht em{font-style:normal;color:var(--coral)}
+    .sub{font-family:'Inter',sans-serif;font-size:1.05rem;color:var(--text2);line-height:1.72;max-width:580px}
+    .bar{width:40px;height:3px;background:linear-gradient(90deg,var(--purple),var(--coral));border-radius:2px;margin-bottom:1.75rem}
+
+    /* ─── BUTTONS ────────────────────────────────── */
+    .btn-gold{display:inline-flex;align-items:center;gap:0.45rem;background:var(--gold);color:#0A0700;font-family:'Manrope',sans-serif;font-weight:700;font-size:1rem;padding:0.95rem 2rem;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:background 0.18s,transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden}
+    .btn-gold::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.15) 50%,transparent 100%);transform:translateX(-100%);transition:transform 0.5s}
+    .btn-gold:hover::after{transform:translateX(100%)}
+    .btn-gold:hover{background:var(--gold-d);transform:translateY(-2px);box-shadow:0 10px 30px rgba(245,158,11,0.3)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:0.45rem;background:transparent;color:var(--text);font-family:'Manrope',sans-serif;font-weight:600;font-size:1rem;padding:0.95rem 2rem;border-radius:8px;text-decoration:none;border:1px solid var(--bord-h);cursor:pointer;transition:border-color 0.18s,background 0.18s}
+    .btn-ghost:hover{border-color:var(--text2);background:rgba(255,255,255,0.04)}
+
+    /* ─── LIVE DOT ───────────────────────────────── */
+    .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--coral);animation:blink 1.6s infinite;flex-shrink:0}
+    @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.8)}}
+
+    /* ─── HERO ───────────────────────────────────── */
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 2rem 5rem;position:relative;overflow:hidden}
+    /* Floating orbs */
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:drift 12s ease-in-out infinite}
+    .orb1{width:500px;height:500px;background:rgba(124,58,237,0.2);top:-100px;left:-100px;animation-delay:0s}
+    .orb2{width:400px;height:400px;background:rgba(255,80,112,0.12);bottom:-80px;right:-80px;animation-delay:-5s}
+    .orb3{width:300px;height:300px;background:rgba(245,158,11,0.08);top:50%;right:10%;animation-delay:-8s}
+    @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.95)}}
+    /* Particle dots */
+    .particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .particle{position:absolute;width:2px;height:2px;background:rgba(255,255,255,0.3);border-radius:50%;animation:float linear infinite}
+    @keyframes float{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:0.5}100%{transform:translateY(-120vh) translateX(30px);opacity:0}}
+
+    .hero-eye{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.3);color:var(--purple-l);font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 1rem;border-radius:100px;margin-bottom:2rem;position:relative;z-index:1}
+    .hero h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(2.75rem,6vw,4.75rem);line-height:1.06;letter-spacing:-0.04em;max-width:13ch;margin:0 auto 1.5rem;position:relative;z-index:1}
+    .hero h1 em{font-style:normal;color:var(--coral)}
+    .hero-sub{font-family:'Inter',sans-serif;font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text2);max-width:560px;margin:0 auto 2.5rem;line-height:1.72;position:relative;z-index:1}
+    .hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;position:relative;z-index:1}
+    .hero-trust{margin-top:3rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;color:var(--faint);font-size:0.82rem;position:relative;z-index:1}
+    .hero-trust b{color:var(--green);font-weight:600}
+
+    /* ─── MARQUEE ────────────────────────────────── */
+    .marq-wrap{padding:1.2rem 0;background:var(--surf);border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);overflow:hidden}
+    .marq-track{display:flex;gap:3rem;width:max-content;animation:marq 24s linear infinite;align-items:center}
+    .marq-track:hover{animation-play-state:paused}
+    @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .mi{white-space:nowrap;font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:0.5rem}
+    .mi span{color:var(--coral);font-size:0.5rem}
+
+    /* ─── SECTIONS ───────────────────────────────── */
+    section{padding:5.5rem 2rem}
+    .section-alt{background:var(--surf)}
+
+    /* ─── PAIN ───────────────────────────────────── */
+    .pain-hd{margin-bottom:3rem}
+    .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.25rem}
+    .pain-c{background:var(--bg);border:1px solid var(--bord);border-radius:12px;padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
+    .pain-c:hover{border-color:var(--bord-h);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.4)}
+    .pain-ico{width:38px;height:38px;background:rgba(255,80,112,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+    .pain-c strong{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.3rem}
+    .pain-c p{font-size:0.88rem;color:var(--text2);line-height:1.62}
+
+    /* ─── MARKET STATS ───────────────────────────── */
+    .stats-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3.25rem}
+    .stat-c{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:2rem 1.75rem;position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s}
+    .stat-c:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.5)}
+    .stat-c::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--coral))}
+    .lbadge{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(255,80,112,0.1);border:1px solid rgba(255,80,112,0.28);color:var(--coral);font-family:'Inter',sans-serif;font-size:0.66rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:4px;margin-bottom:0.65rem}
+    .stat-n{font-family:'Manrope',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;margin:0.5rem 0;background:linear-gradient(130deg,#fff 20%,var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .stat-d{color:var(--text2);font-size:0.88rem;line-height:1.5}
+    .stat-s{display:block;font-size:0.68rem;color:var(--faint);margin-top:0.5rem}
+
+    /* ─── TIKTOK SECTION ─────────────────────────── */
+    #tiktok-shop{background:var(--tk-bg);padding:5.5rem 2rem;position:relative;overflow:hidden;border-top:1px solid #0A0A10;border-bottom:1px solid #0A0A10}
+    .tk-bg-glow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .tk-bg-glow::before{content:'';position:absolute;top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(0,242,234,0.07) 0%,transparent 65%)}
+    .tk-bg-glow::after{content:'';position:absolute;bottom:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(255,0,80,0.08) 0%,transparent 65%)}
+    /* Scanlines overlay */
+    .tk-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);pointer-events:none;opacity:0.3}
+
+    .tk-label{display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 1rem;border-radius:100px;border:1px solid rgba(0,242,234,0.35);background:rgba(0,242,234,0.08);color:var(--tk-cyan);font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2rem;position:relative;z-index:2}
+    .tk-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--tk-red);animation:blink 1.2s infinite}
+
+    #tiktok-shop h2.ht{color:#fff;position:relative;z-index:2}
+    #tiktok-shop h2.ht em{color:var(--tk-cyan)}
+    #tiktok-shop .sub{color:rgba(255,255,255,0.55);position:relative;z-index:2}
+
+    .tk-intro{max-width:700px;margin-bottom:3.5rem;position:relative;z-index:2}
+
+    /* TikTok stats */
+    .tk-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.25rem;margin-bottom:3.5rem;position:relative;z-index:2}
+    .tk-stat{border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;background:rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
+    .tk-stat:hover{border-color:rgba(0,242,234,0.3);transform:translateY(-3px)}
+    .tk-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tk-red),var(--tk-cyan))}
+    .tk-num{font-family:'Manrope',sans-serif;font-weight:800;font-size:2.2rem;line-height:1;margin-bottom:0.5rem;background:linear-gradient(135deg,#fff,var(--tk-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .tk-desc{color:rgba(255,255,255,0.5);font-size:0.83rem;line-height:1.5}
+    .tk-src{display:block;font-size:0.65rem;color:rgba(255,255,255,0.22);margin-top:0.5rem}
+
+    /* TikTok pillars */
+    .tk-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:3.5rem;position:relative;z-index:2}
+    .tk-pill{border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.75rem;background:rgba(255,255,255,0.025);transition:border-color 0.25s,transform 0.25s}
+    .tk-pill:hover{border-color:rgba(0,242,234,0.25);transform:translateY(-3px)}
+    .tk-pill-ico{font-size:1.75rem;margin-bottom:0.75rem;display:block}
+    .tk-pill h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:0.5rem;letter-spacing:-0.02em}
+    .tk-pill p{color:rgba(255,255,255,0.5);font-size:0.88rem;line-height:1.65}
+    .tk-pill .tk-tag{display:inline-block;margin-top:0.75rem;font-family:'Inter',sans-serif;font-size:0.7rem;font-weight:600;color:var(--tk-cyan);letter-spacing:0.05em}
+
+    /* TikTok fashion items */
+    .tk-fashion{position:relative;z-index:2;margin-bottom:3rem}
+    .tk-fashion h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:1.25rem;letter-spacing:-0.02em}
+    .tk-items{display:flex;flex-wrap:wrap;gap:0.75rem}
+    .tk-item{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.65rem 1rem;color:rgba(255,255,255,0.7);font-size:0.88rem;font-weight:500;transition:border-color 0.2s}
+    .tk-item:hover{border-color:rgba(255,0,80,0.35);color:#fff}
+    .tk-item-n{font-family:'Manrope',sans-serif;font-weight:700;font-size:0.75rem;color:var(--tk-red);margin-right:0.2rem}
+
+    /* TikTok urgency banner */
+    .tk-urgency{background:linear-gradient(90deg,rgba(255,0,80,0.15),rgba(0,242,234,0.15));border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;position:relative;z-index:2}
+    .tk-urgency-ico{font-size:2rem;flex-shrink:0}
+    .tk-urgency h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:0.35rem;letter-spacing:-0.02em}
+    .tk-urgency p{color:rgba(255,255,255,0.55);font-size:0.88rem;line-height:1.6}
+
+    .tk-cta{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--tk-red),#CC003D);color:#fff;font-family:'Manrope',sans-serif;font-weight:700;font-size:0.95rem;padding:0.9rem 1.75rem;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:2}
+    .tk-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,0,80,0.35)}
+
+    /* Cases TikTok */
+    .tk-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:2.5rem;margin-bottom:3rem;position:relative;z-index:2}
+    .tk-case{border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.5rem;background:rgba(255,255,255,0.025)}
+    .tk-case-badge{display:inline-block;background:rgba(0,242,234,0.12);border:1px solid rgba(0,242,234,0.25);color:var(--tk-cyan);font-size:0.76rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:20px;margin-bottom:0.85rem}
+    .tk-case p{color:rgba(255,255,255,0.5);font-size:0.88rem;line-height:1.65;margin-bottom:0.85rem}
+    .tk-case-co{color:rgba(255,255,255,0.3);font-size:0.78rem;font-style:italic}
+
+    /* ─── SOLUTION ───────────────────────────────── */
+    .sol-intro{max-width:680px;margin-bottom:3.5rem}
+    .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:2rem}
+    .pillar{background:var(--bg);border:1px solid var(--bord);border-radius:16px;padding:2.5rem;transition:transform 0.25s,box-shadow 0.25s}
+    .pillar:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.5)}
+    .pil-a{border-color:rgba(124,58,237,0.35)}
+    .pil-b{border-color:rgba(255,80,112,0.35)}
+    .ptag{display:inline-block;font-family:'Inter',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.22rem 0.7rem;border-radius:4px;margin-bottom:1.25rem}
+    .pil-a .ptag{background:rgba(124,58,237,0.14);color:var(--purple-l)}
+    .pil-b .ptag{background:rgba(255,80,112,0.14);color:var(--coral)}
+    .pillar h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.45rem;letter-spacing:-0.025em;margin-bottom:0.7rem}
+    .pillar .pd{color:var(--text2);font-size:0.93rem;line-height:1.7;margin-bottom:1.75rem}
+    .feat-l{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
+    .feat-l li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.9rem;color:var(--text2);line-height:1.55}
+    .feat-l li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:0.05rem}
+    .ch-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--bord)}
+    .ch-t{font-family:'Inter',sans-serif;font-size:0.74rem;font-weight:600;padding:0.24rem 0.72rem;border-radius:20px;border:1px solid var(--bord-h);color:var(--text2)}
+
+    /* ─── PROCESS ────────────────────────────────── */
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2.5rem;margin-top:3.25rem;position:relative}
+    /* Connecting line */
+    .steps::before{content:'';position:absolute;top:36px;left:calc(25%);right:calc(25%);height:1px;background:linear-gradient(90deg,transparent,var(--bord),var(--bord),transparent);display:none}
+    .step{position:relative}
+    .step-n{font-family:'Manrope',sans-serif;font-weight:800;font-size:3.5rem;line-height:1;color:var(--bord);margin-bottom:1rem;transition:color 0.3s}
+    .step:hover .step-n{color:var(--purple)}
+    .step h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;letter-spacing:-0.02em}
+    .step p{color:var(--text2);font-size:0.88rem;line-height:1.65}
+
+    /* ─── PROOF ──────────────────────────────────── */
+    .proof-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+    .pc{background:var(--bg);border:1px solid var(--bord);border-radius:14px;padding:1.75rem;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
+    .pc:hover{border-color:var(--bord-h);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.4)}
+    .rb{display:inline-block;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.22);color:var(--green);font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:700;padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem}
+    .pc blockquote{font-style:normal;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--text2);line-height:1.72;margin-bottom:1.25rem}
+    .pauth{display:flex;align-items:center;gap:0.75rem}
+    .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--coral));display:flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-weight:700;font-size:0.85rem;color:#fff;flex-shrink:0}
+    .an{font-family:'Manrope',sans-serif;font-weight:600;font-size:0.88rem}
+    .ac{color:var(--text2);font-size:0.78rem}
+
+    /* ─── FOR WHOM ───────────────────────────────── */
+    .fw-g{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-top:3rem;text-align:left}
+    .fw-c{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:2rem}
+    .fw-c h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:1.25rem;letter-spacing:-0.02em}
+    .fw-yes h3{color:var(--green)}
+    .fw-no h3{color:var(--text2)}
+    .ck-l{list-style:none;display:flex;flex-direction:column;gap:0.85rem}
+    .ck-l li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.9rem;color:var(--text2);line-height:1.55}
+    .ck-y li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+    .ck-n li::before{content:'✕';color:var(--faint);font-weight:700;flex-shrink:0}
+
+    /* ─── FINAL CTA ──────────────────────────────── */
+    .fcta{padding:7rem 2rem;text-align:center;position:relative;overflow:hidden}
+    .fcta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(124,58,237,0.14) 0%,transparent 58%),radial-gradient(ellipse at 70% 50%,rgba(255,80,112,0.09) 0%,transparent 58%);pointer-events:none}
+    .fcta h2{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(2.1rem,4.5vw,3.5rem);line-height:1.1;letter-spacing:-0.035em;margin-bottom:1.25rem;position:relative;z-index:1}
+    .fcta h2 em{font-style:normal;color:var(--coral)}
+    .fcta>div>p{color:var(--text2);font-size:1.1rem;max-width:490px;margin:0 auto 2.75rem;line-height:1.72;position:relative;z-index:1}
+    .fcta .btn-gold{position:relative;z-index:1;font-size:1.05rem;padding:1.1rem 2.4rem;animation:pulse-cta 3s ease-in-out infinite}
+    @keyframes pulse-cta{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 0 8px rgba(245,158,11,0.15)}}
+    .tr-row{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;margin-top:2rem;position:relative;z-index:1}
+    .tr-i{display:flex;align-items:center;gap:0.4rem;color:var(--text2);font-size:0.83rem}
+    .tr-i b{color:var(--green)}
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    footer{padding:2rem;background:var(--surf);border-top:1px solid var(--bord);text-align:center}
+    .f-logo{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.04em;color:var(--text);display:block;margin-bottom:0.6rem}
+    .f-logo em{font-style:normal;color:var(--coral)}
+    footer p{color:var(--faint);font-size:0.82rem}
+
+    /* ─── REVEAL ANIMATIONS ──────────────────────── */
+    .r{opacity:0;transition:opacity 0.65s ease,transform 0.65s ease}
+    .r.up{transform:translateY(28px)}
+    .r.left{transform:translateX(-28px)}
+    .r.right{transform:translateX(28px)}
+    .r.in{opacity:1;transform:none}
+    .r[data-d="1"]{transition-delay:0.08s}
+    .r[data-d="2"]{transition-delay:0.16s}
+    .r[data-d="3"]{transition-delay:0.24s}
+    .r[data-d="4"]{transition-delay:0.32s}
+    .r[data-d="5"]{transition-delay:0.40s}
+    .r[data-d="6"]{transition-delay:0.48s}
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media(max-width:860px){
+      .pillars,.fw-g{grid-template-columns:1fr}
+      .pain-grid,.stats-g,.proof-g,.steps,.tk-stats,.tk-pillars,.tk-cases{grid-template-columns:1fr}
+      nav{padding:0 1.25rem}
+      .nav-links{display:none}
+      section,#tiktok-shop{padding-left:1.25rem;padding-right:1.25rem}
+      .tk-urgency{flex-direction:column;gap:0.75rem}
+    }
+    @media(max-width:560px){
+      .hero-ctas{flex-direction:column;align-items:stretch}
+      .btn-gold,.btn-ghost{width:100%;justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ══════════ NAV ══════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="logo">Live<em>PRO</em></a>
+  <div class="nav-links">
+    <a href="#solucao" class="nav-link">Marketplace</a>
+    <a href="#tiktok-shop" class="nav-link tiktok">● TikTok Shop</a>
+    <a href="#como-funciona" class="nav-link">Como funciona</a>
+  </div>
+  <a href="#cta" class="nav-btn">Falar com especialista →</a>
+</nav>
+
+<!-- ══════════ HERO ════════════════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-eye"><div class="dot"></div>Marketplace &amp; TikTok Shop para Fabricantes de Moda</div>
+  <h1>Você é fabricante?<br>O Brasil quer<br>comprar de você.<br>Te falta o <em>canal certo.</em></h1>
+  <p class="hero-sub">A LivePRO é a consultoria + braço comercial que leva sua confecção para os maiores canais de venda online do Brasil — sem você precisar montar um departamento de e-commerce do zero.</p>
+  <div class="hero-ctas">
+    <a href="#cta" class="btn-gold">Quero escalar minha marca →</a>
+    <a href="#tiktok-shop" class="btn-ghost">Ver oportunidade TikTok Shop</a>
+  </div>
+  <p class="hero-trust"><b>✓</b>&nbsp; Fabricantes de moda que já faturam online com a LivePRO</p>
+</section>
+
+<!-- ══════════ MARQUEE ══════════════════════════════ -->
+<div class="marq-wrap">
+  <div class="marq-track">
+    <span class="mi">Shopee<span>●</span></span><span class="mi">Mercado Livre<span>●</span></span><span class="mi">TikTok Shop<span>●</span></span><span class="mi">Magalu<span>●</span></span><span class="mi">Shopee Live<span>●</span></span><span class="mi">Amazon<span>●</span></span><span class="mi">Shein<span>●</span></span><span class="mi">Dafiti<span>●</span></span><span class="mi">Instagram Live<span>●</span></span>
+    <span class="mi">Shopee<span>●</span></span><span class="mi">Mercado Livre<span>●</span></span><span class="mi">TikTok Shop<span>●</span></span><span class="mi">Magalu<span>●</span></span><span class="mi">Shopee Live<span>●</span></span><span class="mi">Amazon<span>●</span></span><span class="mi">Shein<span>●</span></span><span class="mi">Dafiti<span>●</span></span><span class="mi">Instagram Live<span>●</span></span>
+  </div>
+</div>
+
+<!-- ══════════ PAIN ═════════════════════════════════ -->
+<section class="section-alt" id="problema">
+  <div class="wrap">
+    <div class="pain-hd">
+      <span class="label">O problema real</span>
+      <h2 class="ht">Você sabe que precisa estar online.<br>Mas por onde começar?</h2>
+      <p class="sub">Toda semana, fabricantes de moda perdem vendas para concorrentes que entenderam o jogo dos marketplaces. O problema quase nunca é o produto.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-c r up" data-d="1"><div class="pain-ico">🗺️</div><div><strong>Não sei por onde começar</strong><p>Shopee, Mercado Livre, Magalu, TikTok Shop... cada canal tem taxas, regras e lógicas diferentes. E você não tem tempo para aprender tudo do zero.</p></div></div>
+      <div class="pain-c r up" data-d="2"><div class="pain-ico">📦</div><div><strong>Produto cadastrado, zero venda</strong><p>Você abriu a conta, subiu os produtos — mas o algoritmo te enterra. Foto ruim, descrição fraca, preço errado: o concorrente fica na frente.</p></div></div>
+      <div class="pain-c r up" data-d="3"><div class="pain-ico">📺</div><div><strong>Tentou fazer live... e nada</strong><p>1 hora transmitindo, falou dos produtos, zero pedidos. Live commerce exige estrutura, roteiro e apresentadora. Improviso não converte.</p></div></div>
+      <div class="pain-c r up" data-d="4"><div class="pain-ico">💸</div><div><strong>Medo de vender no prejuízo</strong><p>Comissão + frete + embalagem + anúncio. Quem não calcula margem dentro do canal acaba pagando para trabalhar.</p></div></div>
+      <div class="pain-c r up" data-d="5"><div class="pain-ico">👥</div><div><strong>Sem equipe de e-commerce</strong><p>Você já carrega produção, estoque e equipe fabril. Criar mais uma operação do zero, com catálogo, atendimento e logística, parece impossível.</p></div></div>
+      <div class="pain-c r up" data-d="6"><div class="pain-ico">🔍</div><div><strong>Seu concorrente está ganhando</strong><p>Marcas menores, com produtos iguais ou piores, vendem muito mais porque entenderam o digital. Isso não é questão de produto — é de canal.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MARKET ═══════════════════════════════ -->
+<section id="mercado">
+  <div class="wrap" style="text-align:center">
+    <span class="label">A oportunidade que você ainda não acessou</span>
+    <h2 class="ht">O mercado que está esperando<br>pela sua confecção</h2>
+    <p class="sub" style="margin:0 auto">Enquanto você avalia a entrada, os marketplaces brasileiros movimentam bilhões — e moda lidera o volume de pedidos.</p>
+    <div class="stats-g">
+      <div class="stat-c r up"><div class="lbadge"><div class="dot"></div> E-commerce BR</div><div class="stat-n" data-target="204" data-suffix="bi">—</div><p class="stat-d">bilhões movimentados pelo e-commerce no Brasil em 2024</p><span class="stat-s">Fonte: ABComm, 2024</span></div>
+      <div class="stat-c r up" data-d="1"><div class="lbadge"><div class="dot"></div> Moda</div><div class="stat-n">#1</div><p class="stat-d">em volume de pedidos nos marketplaces — roupas, calçados e acessórios</p><span class="stat-s">Categoria líder em unidades</span></div>
+      <div class="stat-c r up" data-d="2"><div class="lbadge"><div class="dot"></div> Shopee BR</div><div class="stat-n" data-target="80" data-suffix="mi+">—</div><p class="stat-d">usuários ativos mensais no Brasil</p><span class="stat-s">Maior marketplace de moda popular</span></div>
+      <div class="stat-c r up" data-d="3"><div class="lbadge"><div class="dot"></div> Live Commerce</div><div class="stat-n">+200%</div><p class="stat-d">crescimento ao ano no Brasil — Shopee Live, TikTok Shop, Instagram</p><span class="stat-s">Estimativa de mercado, 2024</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TIKTOK SHOP ══════════════════════════ -->
+<section id="tiktok-shop">
+  <div class="tk-bg-glow"></div>
+  <div class="tk-scan"></div>
+  <div class="wrap" style="position:relative;z-index:2">
+
+    <div class="tk-intro">
+      <div class="tk-label"><div class="tk-dot"></div>Foco principal · TikTok Shop Brasil</div>
+      <h2 class="ht">O TikTok Shop cresceu<br><em>102 vezes em 1 ano</em> no Brasil.<br>E moda é a categoria perfeita.</h2>
+      <p class="sub">Lançado em maio de 2025, o TikTok Shop já mudou o varejo digital brasileiro para sempre. Para fabricantes de moda, a janela de entrada está aberta agora — mas tem prazo de validade.</p>
+    </div>
+
+    <!-- Stats TikTok -->
+    <div class="tk-stats">
+      <div class="tk-stat r up"><div class="tk-num" data-target="102" data-suffix="×">—</div><p class="tk-desc">crescimento do GMV médio diário no primeiro ano de operação no Brasil</p><span class="tk-src">TikTok Newsroom, junho 2026</span></div>
+      <div class="tk-stat r up" data-d="1"><div class="tk-num" data-target="161" data-suffix="×">—</div><p class="tk-desc">crescimento do GMV gerado pelas lives entre maio 2025 e maio 2026</p><span class="tk-src">TikTok Newsroom, junho 2026</span></div>
+      <div class="tk-stat r up" data-d="2"><div class="tk-num" data-target="134" data-suffix="mi">—</div><p class="tk-desc">usuários ativos no Brasil — 3° maior mercado TikTok do mundo</p><span class="tk-src">Eletrolar News, junho 2026</span></div>
+      <div class="tk-stat r up" data-d="3"><div class="tk-num" data-target="57" data-suffix="%">—</div><p class="tk-desc">dos usuários compram direto no TikTok Shop após descobrir um produto na plataforma</p><span class="tk-src">Pesquisa in-app TikTok, 17 mil usuários</span></div>
+      <div class="tk-stat r up" data-d="4"><div class="tk-num">R$39bi</div><p class="tk-desc">projetados até 2028 — pode representar 9% de todo o e-commerce brasileiro</p><span class="tk-src">Projeção Santander</span></div>
+      <div class="tk-stat r up" data-d="5"><div class="tk-num">6%</div><p class="tk-desc">de comissão — muito menor que Mercado Livre e Shopee que cobram 12% a 20%+</p><span class="tk-src">E-Commerce Brasil, 2026</span></div>
+    </div>
+
+    <!-- Por que o TikTok Shop é diferente -->
+    <h3 style="font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:1.25rem;letter-spacing:-0.02em;position:relative;z-index:2">Por que o TikTok Shop é diferente de todo marketplace que você já viu</h3>
+    <div class="tk-pillars">
+      <div class="tk-pill r left"><span class="tk-pill-ico">🔍</span><h3>Discovery Commerce — o cliente não precisa estar procurando</h3><p>No Mercado Livre e no Shopee, o cliente já quer comprar e vai buscar. No TikTok Shop, o algoritmo entrega o seu produto pra quem ainda nem sabia que precisava. Você não espera o cliente te achar — você aparece pra ele.</p><span class="tk-tag">↑ Cria demanda antes da intenção de compra</span></div>
+      <div class="tk-pill r right"><span class="tk-pill-ico">📲</span><h3>Zero atrito: o cliente compra sem sair do vídeo</h3><p>O usuário vê o produto no vídeo, clica, paga e recebe — tudo dentro do TikTok. Nada de link externo, redirecionamento ou cadastro novo. Isso elimina o principal ponto de perda da jornada de compra e explica por que a conversão chega a ser 120% maior que no e-commerce tradicional.</p><span class="tk-tag">↑ 120% mais conversão vs e-commerce tradicional</span></div>
+      <div class="tk-pill r left"><span class="tk-pill-ico">🎯</span><h3>O algoritmo não liga pra quão grande você é</h3><p>Uma confecção de Americana pode viralizar tanto quanto a Riachuelo. O que o algoritmo do TikTok premia é a qualidade do conteúdo e a relevância do produto — não o tamanho do orçamento de marketing. Isso nivela o jogo.</p><span class="tk-tag">↑ Marcas pequenas competem de igual com grandes</span></div>
+      <div class="tk-pill r right"><span class="tk-pill-ico">🤝</span><h3>Afiliados vendem por você — com comissão, sem custo fixo</h3><p>O TikTok Shop tem um ecossistema de criadores afiliados que promovem produtos em troca de comissão por venda. Você não paga nada adiantado — só quando vender. Uma marca como a Moderna chegou a 9 mil afiliados ativos, vendendo mais de 10 mil peças por dia.</p><span class="tk-tag">↑ Escala sem contratar equipe interna</span></div>
+      <div class="tk-pill r left"><span class="tk-pill-ico">📡</span><h3>Lives de venda: a loja física dentro do celular</h3><p>Durante uma transmissão ao vivo, o apresentador mostra o produto, tira dúvidas em tempo real e cria urgência de oferta. O resultado? Taxa de conversão de lives entre 8% e 15% dos espectadores — número impossível em qualquer outro canal. O GMV das lives cresceu 161 vezes no Brasil em um ano.</p><span class="tk-tag">↑ 8–15% de conversão dos espectadores</span></div>
+      <div class="tk-pill r right"><span class="tk-pill-ico">⏱️</span><h3>Quem entrar agora constrói antes da concorrência chegar</h3><p>As comissões são baixas, o custo de aquisição ainda reflete o estágio inicial e os criadores afiliados ainda têm espaço para novas marcas. Quando o canal consolidar, quem chegou primeiro vai dominar. Quem esperar vai encontrar um mercado caro e lotado.</p><span class="tk-tag">↑ Janela estratégica com data de validade</span></div>
+    </div>
+
+    <!-- Moda no TikTok Shop -->
+    <div class="tk-fashion r up">
+      <h3>Moda é a categoria que mais converte no TikTok Shop — e esses são os itens mais vendidos:</h3>
+      <div class="tk-items">
+        <div class="tk-item"><span class="tk-item-n">#1</span> Calças femininas</div>
+        <div class="tk-item"><span class="tk-item-n">#2</span> Camisetas e blusinhas femininas</div>
+        <div class="tk-item"><span class="tk-item-n">#3</span> Vestidos casuais femininos</div>
+        <div class="tk-item">👗 Moda fitness</div>
+        <div class="tk-item">👙 Moda praia</div>
+        <div class="tk-item">👗 Moda plus size</div>
+        <div class="tk-item">🧢 Acessórios e bolsas</div>
+      </div>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.83rem;margin-top:1rem">O formato "try on haul" (experimentar roupas ao vivo ou em vídeo) é o tipo de conteúdo com maior engajamento de moda no TikTok — perfeito para fabricantes com catálogo próprio.</p>
+    </div>
+
+    <!-- Cases reais -->
+    <h3 style="font-family:'Manrope',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:1.25rem;position:relative;z-index:2;letter-spacing:-0.02em">Cases reais do TikTok Shop no Brasil</h3>
+    <div class="tk-cases">
+      <div class="tk-case r up"><div class="tk-case-badge">Moda · Riachuelo</div><p>Primeira grande marca de moda no TikTok Shop Brasil. Acumulou mais de <strong style="color:rgba(255,255,255,0.8)">130 mil pedidos em 12 meses</strong> e registrou <strong style="color:rgba(255,255,255,0.8)">+675% de vendas</strong> no Super Brand Day vs média habitual.</p><span class="tk-case-co">Fonte: TikTok Newsroom, junho 2026</span></div>
+      <div class="tk-case r up" data-d="1"><div class="tk-case-badge">PME · BigHome Brasil</div><p>Entrou em dezembro de 2025 e em poucos meses o TikTok Shop se tornou o principal canal — faturando <strong style="color:rgba(255,255,255,0.8)">R$17 milhões em 2026</strong>. É <strong style="color:rgba(255,255,255,0.8)">5 vezes maior</strong> que o segundo canal de vendas da empresa.</p><span class="tk-case-co">Fonte: TikTok Newsroom, junho 2026</span></div>
+      <div class="tk-case r up" data-d="2"><div class="tk-case-badge">PME · Moderna</div><p>Desde maio de 2025, a receita <strong style="color:rgba(255,255,255,0.8)">mais que dobrou</strong> e o TikTok Shop passou a representar <strong style="color:rgba(255,255,255,0.8)">60% das vendas totais</strong> — com 9 mil afiliados ativos e 10 mil peças vendidas por dia.</p><span class="tk-case-co">Fonte: Coletiva.net, junho 2026</span></div>
+    </div>
+
+    <!-- Urgency banner -->
+    <div class="tk-urgency r up">
+      <div class="tk-urgency-ico">⚡</div>
+      <div>
+        <h3>A janela está aberta — mas tem prazo de validade</h3>
+        <p>O programa de afiliados ainda tem comissões competitivas, o custo de aquisição ainda reflete o início da plataforma e os criadores ainda têm espaço para marcas novas. Quem entrar primeiro vai construir presença antes da consolidação. Quando o mercado madurar, entrar vai custar muito mais.</p>
+      </div>
+    </div>
+
+    <a href="#cta" class="tk-cta">Quero entrar no TikTok Shop com a LivePRO →</a>
+  </div>
+</section>
+
+<!-- ══════════ SOLUTION ══════════════════════════════ -->
+<section class="section-alt" id="solucao">
+  <div class="wrap">
+    <div class="sol-intro">
+      <span class="label">A solução LivePRO</span>
+      <div class="bar"></div>
+      <h2 class="ht">Não é agência. Não é só consultoria.<br>É seu time de <em>vendas online.</em></h2>
+      <p class="sub">A LivePRO combina estratégia com operação real. Você não precisa aprender tudo do zero — nem contratar 5 pessoas. Você fabrica. Nós vendemos.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar pil-a r left">
+        <span class="ptag">Pilar 01</span>
+        <h3>Consultoria Estratégica</h3>
+        <p class="pd">Antes de vender, é preciso saber onde, como e com qual margem. Fazemos o diagnóstico completo e definimos o plano certo para a sua confecção.</p>
+        <ul class="feat-l">
+          <li>Análise de catálogo e seleção dos produtos com maior potencial</li>
+          <li>Precificação com margem real (após comissões, frete e impostos)</li>
+          <li>Seleção dos canais certos para o seu produto e público</li>
+          <li>Posicionamento de marca e identidade visual para live commerce</li>
+          <li>Plano de entrada com metas, cronograma e KPIs de sucesso</li>
+        </ul>
+        <div class="ch-row"><span class="ch-t">Shopee</span><span class="ch-t">Mercado Livre</span><span class="ch-t">Magalu</span><span class="ch-t">Amazon</span><span class="ch-t">TikTok Shop</span></div>
+      </div>
+      <div class="pillar pil-b r right">
+        <span class="ptag">Pilar 02</span>
+        <h3>Braço Comercial</h3>
+        <p class="pd">Nós operamos os canais por você. Você fabrica e abastece o estoque — nós cuidamos de tudo que vem depois.</p>
+        <ul class="feat-l">
+          <li>Cadastro, otimização de catálogo e gestão de conteúdo</li>
+          <li>Gestão de pedidos, estoque e atendimento ao comprador</li>
+          <li>Produção, roteiro e condução de lives de vendas</li>
+          <li>Publicidade paga e impulsionamento nos canais</li>
+          <li>Relatórios de resultado e reuniões quinzenais de otimização</li>
+        </ul>
+        <div class="ch-row"><span class="ch-t">Shopee Live</span><span class="ch-t">TikTok Shop Live</span><span class="ch-t">Instagram Live</span><span class="ch-t">Ads</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROCESS ══════════════════════════════ -->
+<section id="como-funciona">
+  <div class="wrap">
+    <span class="label">Como funciona</span>
+    <h2 class="ht">Do diagnóstico ao primeiro pedido</h2>
+    <div class="steps">
+      <div class="step r up" data-d="1"><div class="step-n">01</div><h3>Diagnóstico</h3><p>Entendemos sua confecção: catálogo, margem, logística e objetivos. Sem promessa vazia — só realidade e potencial real.</p></div>
+      <div class="step r up" data-d="2"><div class="step-n">02</div><h3>Estratégia</h3><p>Definimos quais canais entrar primeiro, como precificar, qual catálogo usar e qual modelo de operação faz sentido.</p></div>
+      <div class="step r up" data-d="3"><div class="step-n">03</div><h3>Ativação</h3><p>Montamos tudo: contas, catálogo, anúncios e lives. Você abastece — nós ativamos as vendas nos canais certos.</p></div>
+      <div class="step r up" data-d="4"><div class="step-n">04</div><h3>Escala</h3><p>Analisamos resultados, otimizamos o que funciona e construímos a operação para crescer com consistência.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROOF ═════════════════════════════════ -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="label">Resultados reais</span>
+    <h2 class="ht">Fabricantes que já saíram<br>da invisibilidade</h2>
+    <div class="proof-g">
+      <div class="pc r left"><div class="rb">↑ 3,2× faturamento online em 4 meses</div><blockquote>"A gente tentou entrar no Shopee por conta e ficamos 6 meses sem resultado. A LivePRO reestruturou o catálogo, ajustou preço — em 60 dias já estávamos acima do que esperávamos. Hoje o marketplace responde por 40% do nosso faturamento."</blockquote><div class="pauth"><div class="av">MR</div><div><div class="an">Marcos R.</div><div class="ac">Confecção feminina · São Paulo, SP</div></div></div></div>
+      <div class="pc r up"><div class="rb">↑ 1ª live TikTok: R$28.000 em vendas</div><blockquote>"Nunca imaginei que live commerce funcionaria para minha moda praia. A LivePRO estruturou tudo — roteiro, apresentadora, produtos. Na primeira live do TikTok Shop a gente bateu um número que nunca tínhamos alcançado nem em feira."</blockquote><div class="pauth"><div class="av">JL</div><div><div class="an">Juliana L.</div><div class="ac">Moda praia e fitness · Fortaleza, CE</div></div></div></div>
+      <div class="pc r right"><div class="rb">↑ Mercado Livre Gold em 5 meses</div><blockquote>"Eu vendia só para lojista. Tinha medo do Mercado Livre pela concorrência. A LivePRO me mostrou que o problema não era o mercado — era meu posicionamento. Hoje sou Gold e não dependo mais de revendedora."</blockquote><div class="pauth"><div class="av">RS</div><div><div class="an">Ricardo S.</div><div class="ac">Moda masculina · Americana, SP</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOR WHOM ══════════════════════════════ -->
+<section id="para-quem" style="text-align:center">
+  <div class="wrap">
+    <span class="label">Para quem é</span>
+    <h2 class="ht">A LivePRO foi desenhada para<br>quem ainda tem espaço pra crescer</h2>
+    <div class="fw-g">
+      <div class="fw-c fw-yes r left"><h3>✓ É para você se...</h3><ul class="ck-l ck-y"><li>Você fabrica moda — roupas, calçados, acessórios, lingerie, fitness, infantil</li><li>Ainda não vende em marketplace ou está começando sem resultado</li><li>Quer entrar no TikTok Shop ou live commerce mas não tem estrutura</li><li>Não tem departamento de e-commerce interno consolidado</li><li>Quer escalar o faturamento sem aumentar só a capacidade produtiva</li><li>Está disposto a adaptar catálogo, precificação e processos</li></ul></div>
+      <div class="fw-c fw-no r right"><h3>✕ Não é para você se...</h3><ul class="ck-l ck-n"><li>Você já tem uma operação digital estruturada e escalando</li><li>Não fabrica — apenas revende produtos de terceiros sem exclusividade</li><li>Não está disposto a investir em catálogo, logística ou processos mínimos</li><li>Espera resultado imediato sem comprometimento de médio prazo</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FINAL CTA ══════════════════════════════ -->
+<section class="fcta" id="cta">
+  <div class="wrap">
+    <span class="label" style="position:relative;z-index:1">Próximo passo</span>
+    <h2>O primeiro passo <em>não tem custo.</em></h2>
+    <p>Nosso especialista vai entender o momento da sua confecção e mostrar, sem enrolação, o que precisa ser feito para você começar a vender online com resultado real.</p>
+    <a href="#" class="btn-gold" id="main-cta" onclick="return false">Agendar minha conversa gratuita →</a>
+    <div class="tr-row">
+      <div class="tr-i"><b>✓</b> Sem pitch agressivo</div>
+      <div class="tr-i"><b>✓</b> Sem compromisso imediato</div>
+      <div class="tr-i"><b>✓</b> Diagnóstico honesto da sua operação</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ════════════════════════════════ -->
+<footer>
+  <span class="f-logo">Live<em>PRO</em></span>
+  <p>Consultoria &amp; Operação em Marketplace e Live Commerce para Fabricantes de Moda</p>
+  <p style="margin-top:0.4rem;font-size:0.72rem;opacity:0.4">© 2025 LivePRO · livehousee.com · Todos os direitos reservados</p>
+</footer>
+
+<!-- ══════════ SCRIPTS ════════════════════════════════ -->
+<script>
+(function(){
+  // 1. PROGRESS BAR
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const s = document.documentElement;
+    const pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  }, {passive:true});
+
+  // 2. NAV SCROLL EFFECT
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60 ? 'rgba(8,8,15,0.97)' : 'rgba(8,8,15,0.82)';
+  }, {passive:true});
+
+  // 3. FLOATING PARTICLES IN HERO
+  const pc = document.getElementById('particles');
+  if(pc){
+    for(let i = 0; i < 28; i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.cssText = `
+        left:${Math.random()*100}%;
+        bottom:${Math.random()*-20}%;
+        animation-duration:${8 + Math.random()*14}s;
+        animation-delay:${Math.random()*10}s;
+        width:${1+Math.random()*2}px;
+        height:${1+Math.random()*2}px;
+        opacity:${0.15+Math.random()*0.4}
+      `;
+      pc.appendChild(p);
+    }
+  }
+
+  // 4. INTERSECTION OBSERVER — REVEAL
+  const els = document.querySelectorAll('.r');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el => io.observe(el));
+
+  // 5. COUNTER ANIMATION
+  function countUp(el, target, suffix, dur=1600){
+    let start = null;
+    const step = ts => {
+      if(!start) start = ts;
+      const prog = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - prog, 3);
+      const val = Math.floor(ease * target);
+      el.textContent = val + (suffix || '');
+      if(prog < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const counters = document.querySelectorAll('[data-target]');
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        countUp(el, parseInt(el.dataset.target), el.dataset.suffix || '');
+        cio.unobserve(el);
+      }
+    });
+  }, {threshold:0.5});
+  counters.forEach(el => cio.observe(el));
+
+  // 6. CTA BUTTON — link real do SDR (substituir abaixo)
+  const ctaMain = document.getElementById('main-cta');
+  const navBtn = document.querySelector('.nav-btn');
+  const tkCta = document.querySelector('.tk-cta');
+  const allCtaLinks = document.querySelectorAll('a[href="#cta"]');
+
+  function openSDR(e){
+    if(e) e.preventDefault();
+    // ⚠️ SUBSTITUIR PELA URL REAL: Calendly, WhatsApp, formulário do SDR
+    const SDR_URL = 'https://wa.me/5562984914936?text=Ol%C3%A1%2C+vi+a+LivePRO+e+quero+saber+mais+sobre+Marketplace+e+TikTok+Shop+para+minha+confec%C3%A7%C3%A3o';
+    window.open(SDR_URL, '_blank');
+  }
+
+  if(ctaMain) ctaMain.addEventListener('click', openSDR);
+  allCtaLinks.forEach(a => a.addEventListener('click', (e)=>{ e.preventDefault(); openSDR(); }));
+
+  // 7. SMOOTH ANCHOR SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if(id === '#' || id.startsWith('#cta')) return;
+      const tgt = document.querySelector(id);
+      if(tgt){ e.preventDefault(); window.scrollTo({top: tgt.getBoundingClientRect().top + window.pageYOffset - 72, behavior:'smooth'}); }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
