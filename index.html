@@ -165,9 +165,14 @@
     /* TikTok fashion items */
     .tk-fashion{position:relative;z-index:2;margin-bottom:3rem}
     .tk-fashion h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:1.25rem;letter-spacing:-0.02em}
-    .tk-items{display:flex;flex-wrap:wrap;gap:0.75rem}
-    .tk-item{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.65rem 1rem;color:rgba(255,255,255,0.7);font-size:0.88rem;font-weight:500;transition:border-color 0.2s}
+    .tk-carousel{position:relative;overflow:hidden}
+    .tk-carousel::before,.tk-carousel::after{content:'';position:absolute;top:0;bottom:0;width:90px;z-index:3;pointer-events:none}
+    .tk-carousel::before{left:0;background:linear-gradient(90deg,#050508 0%,transparent 100%)}
+    .tk-carousel::after{right:0;background:linear-gradient(270deg,#050508 0%,transparent 100%)}
+    .tk-items{display:flex;gap:0.75rem;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);padding:0.2rem 0}
+    .tk-item{flex:0 0 calc(33.33% - 0.5rem);display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem 1.1rem;color:rgba(255,255,255,0.7);font-size:0.9rem;font-weight:500;transition:border-color 0.2s,color 0.2s;white-space:nowrap;justify-content:center}
     .tk-item:hover{border-color:rgba(255,0,80,0.35);color:#fff}
+    @media(max-width:860px){.tk-item{flex:0 0 80vw}}
     .tk-item-n{font-family:'Manrope',sans-serif;font-weight:700;font-size:0.75rem;color:var(--tk-red);margin-right:0.2rem}
 
     /* TikTok urgency banner */
@@ -392,14 +397,16 @@
     <!-- Moda no TikTok Shop -->
     <div class="tk-fashion r up">
       <h3>Moda é a categoria que mais converte no TikTok Shop — e esses são os itens mais vendidos:</h3>
-      <div class="tk-items">
-        <div class="tk-item"><span class="tk-item-n">#1</span> Calças femininas</div>
-        <div class="tk-item"><span class="tk-item-n">#2</span> Camisetas e blusinhas femininas</div>
-        <div class="tk-item"><span class="tk-item-n">#3</span> Vestidos casuais femininos</div>
-        <div class="tk-item">👗 Moda fitness</div>
-        <div class="tk-item">👙 Moda praia</div>
-        <div class="tk-item">👗 Moda plus size</div>
-        <div class="tk-item">🧢 Acessórios e bolsas</div>
+      <div class="tk-carousel">
+        <div class="tk-items" id="tkTrack">
+          <div class="tk-item"><span class="tk-item-n">#1</span> Calças femininas</div>
+          <div class="tk-item"><span class="tk-item-n">#2</span> Camisetas e blusinhas femininas</div>
+          <div class="tk-item"><span class="tk-item-n">#3</span> Vestidos casuais femininos</div>
+          <div class="tk-item">💪 Moda fitness</div>
+          <div class="tk-item">👙 Moda praia</div>
+          <div class="tk-item">🌸 Moda plus size</div>
+          <div class="tk-item">👜 Acessórios e bolsas</div>
+        </div>
       </div>
       <p style="color:rgba(255,255,255,0.4);font-size:0.83rem;margin-top:1rem">O formato "try on haul" (experimentar roupas ao vivo ou em vídeo) é o tipo de conteúdo com maior engajamento de moda no TikTok — perfeito para fabricantes com catálogo próprio.</p>
     </div>
@@ -606,6 +613,45 @@
       if(tgt){ e.preventDefault(); window.scrollTo({top: tgt.getBoundingClientRect().top + window.pageYOffset - 72, behavior:'smooth'}); }
     });
   });
+
+  // 7. TK-ITEMS CAROUSEL
+  (function(){
+    const track = document.getElementById('tkTrack');
+    if(!track) return;
+    let cur = 0, timer, paused = false;
+
+    function visible(){ return window.innerWidth <= 860 ? 1 : 3; }
+    function itemW(){
+      const el = track.children[0];
+      if(!el) return 0;
+      const gap = parseFloat(getComputedStyle(track).gap) || 12;
+      return el.offsetWidth + gap;
+    }
+    function maxPos(){ return Math.max(0, track.children.length - visible()); }
+
+    function goTo(n, animate){
+      if(!animate) track.style.transition = 'none';
+      cur = Math.max(0, Math.min(n, maxPos()));
+      track.style.transform = 'translateX(-' + (cur * itemW()) + 'px)';
+      if(!animate) requestAnimationFrame(() => requestAnimationFrame(() => {
+        track.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+      }));
+    }
+
+    function advance(){
+      if(paused) return;
+      cur >= maxPos() ? goTo(0, false) : goTo(cur + 1, true);
+    }
+
+    function start(){ timer = setInterval(advance, 2800); }
+    function stop(){  clearInterval(timer); }
+
+    track.parentElement.addEventListener('mouseenter', () => { paused = true;  stop(); });
+    track.parentElement.addEventListener('mouseleave', () => { paused = false; start(); });
+    window.addEventListener('resize', () => goTo(0, false));
+
+    start();
+  })();
 
 })();
 </script>
