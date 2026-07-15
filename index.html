@@ -233,11 +233,11 @@
 
     /* ─── FOR WHOM ───────────────────────────────── */
     .fw-g{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-top:3rem;text-align:left}
-    .fw-c{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:2.5rem}
+    .fw-c{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:2.5rem;display:flex;flex-direction:column}
     .fw-c h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:1.75rem;letter-spacing:-0.02em}
     .fw-yes h3{color:var(--green)}
     .fw-no h3{color:var(--coral)}
-    .ck-l{list-style:none;display:flex;flex-direction:column;gap:0.85rem}
+    .ck-l{list-style:none;display:flex;flex-direction:column;gap:0.85rem;flex:1;justify-content:space-between}
     .ck-l li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.9rem;color:var(--text2);line-height:1.55}
     .ck-y li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
     .ck-n li::before{content:'✕';color:var(--coral);font-weight:700;flex-shrink:0}
