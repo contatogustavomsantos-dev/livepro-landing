@@ -445,9 +445,9 @@ function doPost(e) {
       <div class="opt card" data-val="Moda Infantil"        onclick="pick(this,1)"><div class="opt-ico">👶</div><div class="opt-body"><div class="opt-label">Moda Infantil</div></div><div class="opt-radio"></div></div>
       <div class="opt card" data-val="Moda Fitness"         onclick="pick(this,1)"><div class="opt-ico">💪</div><div class="opt-body"><div class="opt-label">Moda Fitness</div></div><div class="opt-radio"></div></div>
       <div class="opt card" data-val="Moda Praia"           onclick="pick(this,1)"><div class="opt-ico">🏖️</div><div class="opt-body"><div class="opt-label">Moda Praia</div></div><div class="opt-radio"></div></div>
-      <div class="opt card" data-val="Plus Size"            onclick="pick(this,1)"><div class="opt-ico">🌸</div><div class="opt-body"><div class="opt-label">Plus Size</div></div><div class="opt-radio"></div></div>
       <div class="opt card" data-val="Lingerie / Íntima"    onclick="pick(this,1)"><div class="opt-ico">✨</div><div class="opt-body"><div class="opt-label">Lingerie / Íntima</div></div><div class="opt-radio"></div></div>
       <div class="opt card" data-val="Acessórios / Bolsas"  onclick="pick(this,1)"><div class="opt-ico">👜</div><div class="opt-body"><div class="opt-label">Acessórios</div></div><div class="opt-radio"></div></div>
+      <div class="opt card" id="opt-outros" data-val="" onclick="pickOthers(this,1)" style="grid-column:1/-1"><div class="opt-ico">✏️</div><div class="opt-body"><div class="opt-label">Outros</div><input type="text" id="outros-seg" placeholder="Descreva seu segmento..." onclick="event.stopPropagation()" oninput="updateOthers(this,1)" style="display:none;width:100%;margin-top:0.5rem;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.2);color:#fff;font-size:0.95rem;padding:0.25rem 0;outline:none"></div><div class="opt-radio"></div></div>
     </div>
     <div class="nav-row">
       <button class="btn-primary" id="btn-1" onclick="next()" disabled>Continuar →</button>
@@ -783,12 +783,39 @@ function pick(el, stepNum) {
   container.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
 
+  // hide outros input if another option was picked
+  const outrosInput = document.getElementById('outros-seg');
+  if (outrosInput && el.id !== 'opt-outros') outrosInput.style.display = 'none';
+
   const keys = ['','segmento','volume','digital','desafio','tiktok','prazo','faturamento'];
   A[keys[stepNum]] = el.dataset.val;
   if (el.dataset.score) scores[keys[stepNum]] = parseInt(el.dataset.score);
 
   const btn = document.getElementById(`btn-${stepNum}`);
   if (btn) btn.disabled = false;
+}
+
+function pickOthers(el, stepNum) {
+  const container = document.getElementById(`opts-${stepNum}`);
+  container.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const input = document.getElementById('outros-seg');
+  input.style.display = 'block';
+  input.focus();
+
+  const keys = ['','segmento','volume','digital','desafio','tiktok','prazo','faturamento'];
+  A[keys[stepNum]] = input.value.trim();
+
+  const btn = document.getElementById(`btn-${stepNum}`);
+  if (btn) btn.disabled = !input.value.trim();
+}
+
+function updateOthers(input, stepNum) {
+  const val = input.value.trim();
+  A.segmento = val ? `Outros: ${val}` : '';
+  const btn = document.getElementById(`btn-${stepNum}`);
+  if (btn) btn.disabled = !val;
 }
 
 // ─── SCORE ─────────────────────────────────────────────────────────
