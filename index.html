@@ -78,7 +78,7 @@
     @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.8)}}
 
     /* ─── HERO ───────────────────────────────────── */
-    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 2rem 5rem;position:relative;overflow:hidden}
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:88px 2rem 2.5rem;position:relative;overflow:hidden}
     /* Floating orbs */
     .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:drift 12s ease-in-out infinite}
     .orb1{width:500px;height:500px;background:rgba(124,58,237,0.2);top:-100px;left:-100px;animation-delay:0s}
@@ -90,12 +90,12 @@
     .particle{position:absolute;width:2px;height:2px;background:rgba(255,255,255,0.3);border-radius:50%;animation:float linear infinite}
     @keyframes float{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:0.5}100%{transform:translateY(-120vh) translateX(30px);opacity:0}}
 
-    .hero-eye{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.3);color:var(--purple-l);font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 1rem;border-radius:100px;margin-bottom:2rem;position:relative;z-index:1}
-    .hero h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,4.75rem);line-height:1.1;letter-spacing:-0.04em;max-width:16ch;margin:0 auto 1.5rem;position:relative;z-index:1}
+    .hero-eye{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.3);color:var(--purple-l);font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 1rem;border-radius:100px;margin-bottom:1.25rem;position:relative;z-index:1}
+    .hero h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.8vw,3.1rem);line-height:1.1;letter-spacing:-0.04em;max-width:16ch;margin:0 auto 1rem;position:relative;z-index:1}
     .hero h1 em{font-style:normal;color:var(--coral)}
-    .hero-sub{font-family:'Inter',sans-serif;font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text2);max-width:560px;margin:0 auto 2.5rem;line-height:1.72;position:relative;z-index:1}
+    .hero-sub{font-family:'Inter',sans-serif;font-size:clamp(0.95rem,1.4vw,1.05rem);color:var(--text2);max-width:560px;margin:0 auto 1.75rem;line-height:1.72;position:relative;z-index:1}
     .hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;position:relative;z-index:1}
-    .scroll-arrow{margin-top:3rem;display:flex;justify-content:center;position:relative;z-index:1}
+    .scroll-arrow{margin-top:1.75rem;display:flex;justify-content:center;position:relative;z-index:1}
     .scroll-arrow svg{width:28px;height:28px;opacity:0.5;animation:arrowBounce 1.6s ease-in-out infinite}
     @keyframes arrowBounce{0%,100%{transform:translateY(0);opacity:0.4}50%{transform:translateY(10px);opacity:0.9}}
 
@@ -317,7 +317,7 @@
   <p class="hero-sub">A VendaPRO é a consultoria + braço comercial que opera Shopee, TikTok Shop e Mercado Livre para fabricantes de moda e importadores, sem você precisar montar um departamento de e-commerce do zero.</p>
   <div class="hero-ctas">
     <a href="quiz.html" class="btn-gold">Quero escalar minha marca →</a>
-    <a href="#tiktok-shop" class="btn-ghost">Ver oportunidade TikTok Shop</a>
+    <a href="#tiktok-shop" class="btn-ghost">Ver oportunidades</a>
   </div>
   <div class="scroll-arrow">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
