@@ -32,7 +32,7 @@
       --tk-bg:     #050508;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;overflow-x:hidden}
     body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
     /* ─── PROGRESS BAR ───────────────────────────── */
@@ -108,7 +108,7 @@
     .mi span{color:var(--coral);font-size:0.5rem}
 
     /* ─── SECTIONS ───────────────────────────────── */
-    section{padding:5.5rem 2rem}
+    section{padding:5.5rem 2rem;overflow-x:clip}
     .section-alt{background:var(--surf)}
 
     /* ─── PAIN ───────────────────────────────────── */
@@ -131,7 +131,7 @@
     .stat-s{display:block;font-size:0.68rem;color:var(--faint);margin-top:0.5rem}
 
     /* ─── TIKTOK SECTION ─────────────────────────── */
-    #tiktok-shop{background:var(--tk-bg);padding:5.5rem 2rem;position:relative;overflow:hidden;border-top:1px solid #0A0A10;border-bottom:1px solid #0A0A10}
+    #tiktok-shop{background:var(--tk-bg);padding:5.5rem 2rem;position:relative;overflow:hidden;overflow-x:clip;border-top:1px solid #0A0A10;border-bottom:1px solid #0A0A10}
     .tk-bg-glow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
     .tk-bg-glow::before{content:'';position:absolute;top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(0,242,234,0.07) 0%,transparent 65%)}
     .tk-bg-glow::after{content:'';position:absolute;bottom:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(255,0,80,0.08) 0%,transparent 65%)}
@@ -287,6 +287,8 @@
     @media(max-width:560px){
       .hero-ctas{flex-direction:column;align-items:stretch}
       .btn-gold,.btn-ghost{width:100%;justify-content:center}
+      .nav-btn{font-size:0.78rem;padding:0.45rem 0.85rem}
+      .logo{font-size:1.2rem}
     }
   </style>
 </head>
