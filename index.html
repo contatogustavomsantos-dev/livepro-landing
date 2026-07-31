@@ -104,8 +104,17 @@
     .gate-logo{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.75rem;letter-spacing:-.04em;color:var(--text);text-decoration:none;display:block;margin-bottom:1.5rem}
     .gate-logo em{font-style:normal;color:var(--coral)}
     .gate-seal{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:var(--purple-l);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.38rem 1rem;border-radius:100px;margin-bottom:1.75rem}
-    .gate-h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.55rem,3.6vw,2.65rem);line-height:1.18;letter-spacing:-.035em;max-width:22ch;margin:0 auto 1.25rem;color:var(--text)}
+    .gate-h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.55rem,3.6vw,2.65rem);line-height:1.18;letter-spacing:-.035em;max-width:none;margin:0 auto 1.25rem;color:var(--text)}
     .gate-sub{font-family:'Inter',sans-serif;font-size:clamp(.88rem,1.25vw,.97rem);color:var(--text2);max-width:600px;margin:0 auto 2rem;line-height:1.72}
+    @media(max-width:860px){
+      #vsl-gate{padding:1.5rem 1.25rem 2rem;justify-content:flex-start}
+      .gate-logo{font-size:1.1rem;margin-bottom:.6rem}
+      .gate-seal{margin-bottom:.75rem;font-size:.65rem}
+      .gate-h1{font-size:clamp(1.3rem,5.5vw,1.65rem);margin-bottom:.6rem}
+      .gate-sub{font-size:.88rem;margin-bottom:1rem}
+      .vsl-player-wrap{margin-bottom:.85rem}
+      .gate-trust,.gate-micro{display:none}
+    }
     .vsl-player-wrap{width:100%;max-width:800px;margin:0 auto 1.75rem;border-radius:12px;overflow:hidden;border:1px solid var(--bord-h);background:#000;position:relative;aspect-ratio:16/9}
     #vsl-video{width:100%;height:100%;display:block;background:#000}
     .vsl-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;color:var(--text2);font-size:.88rem;background:var(--card)}
@@ -325,7 +334,7 @@
     }
   </style>
 </head>
-<body class="gate-locked">
+<body>
 
 <div id="progress" role="progressbar" aria-hidden="true"></div>
 <div role="status" aria-live="polite" id="sr-live" class="sr-only"></div>
@@ -343,7 +352,7 @@
       Apresentação Estratégica para Empresas com Produto Físico
     </div>
     <h1 class="gate-h1">Sua empresa não precisa de mais um marketplace. Precisa de uma operação preparada para vender em qualquer canal.</h1>
-    <p class="gate-sub">Nesta apresentação, Gustavo Marques mostra por que tantas empresas travam no digital — e como a VendaPRO estrutura catálogo, anúncios, afiliados, lives e gestão para transformar canais dispersos em uma operação consistente.</p>
+    <p class="gate-sub">Assista a aula gratuita e encontre o verdadeiro problema de muitas lojas que fracassam nos marketplaces.</p>
 
     <!-- VIDEO PLAYER -->
     <div class="vsl-player-wrap" aria-label="Player de vídeo">
@@ -376,7 +385,7 @@
 
 <!-- ══════════ NAV — Estado 2 ════════════════════════ -->
 <header>
-  <nav id="navbar" aria-label="Navegação principal" aria-hidden="true">
+  <nav id="navbar" aria-label="Navegação principal">
     <a href="#" class="logo" aria-label="VendaPRO — topo">Venda<em>PRO</em></a>
     <div class="nav-links" role="list">
       <a href="#metodo" class="nav-link" role="listitem">Método</a>
@@ -389,7 +398,7 @@
 </header>
 
 <!-- ══════════ POST-PITCH — Estado 2 ════════════════ -->
-<div id="post-pitch" aria-hidden="true">
+<div id="post-pitch">
 <main id="main-content">
 
 <!-- MARQUEE -->
@@ -875,7 +884,7 @@
 </div><!-- /post-pitch -->
 
 <!-- ─── STICKY MOBILE CTA ────────────────────────────── -->
-<div id="sticky-cta" aria-hidden="true" aria-label="Solicitar diagnóstico">
+<div id="sticky-cta" aria-label="Solicitar diagnóstico">
   <a href="quiz.html" class="btn-gold js-quiz-link" onclick="trackEvent('cta_sticky_click')">Solicitar diagnóstico →</a>
 </div>
 
@@ -1001,15 +1010,6 @@ function setupVideo() {
 
 /* ── GATE INIT ────────────────────────────────────────── */
 function initGate() {
-  var p = new URLSearchParams(location.search);
-  if (p.get('reset') === '1') {
-    try { sessionStorage.removeItem(VENDAPRO_CONFIG.storageKey); } catch(e) {}
-  }
-  var unlocked = p.get('preview') === 'after';
-  if (!unlocked) {
-    try { unlocked = sessionStorage.getItem(VENDAPRO_CONFIG.storageKey) === 'true'; } catch(e) {}
-  }
-  if (unlocked) { unlockPage(); return; }
   updateQuizLinks();
   setupVideo();
 }
